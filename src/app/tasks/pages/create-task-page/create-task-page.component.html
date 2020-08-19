@@ -1,0 +1,44 @@
+<form
+  class="create-task-form"
+  (ngSubmit)="submit()"
+  [formGroup]="createTaskForm"
+>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{
+        isEdit ? "Edit task" : "Create new task"
+      }}</mat-card-title>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+
+    <mat-card-content>
+      <div class="fields">
+        <mat-form-field>
+          <mat-label>Name</mat-label>
+          <input type="text" matInput formControlName="name" />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Description</mat-label>
+          <textarea matInput formControlName="description"></textarea>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="status">
+            <mat-option *ngFor="let status of taskStatus" [value]="status">{{
+              status
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+    <mat-divider></mat-divider>
+    <mat-card-actions align="end">
+      <button type="button" mat-button>Cancel</button>
+      <button type="submit" mat-raised-button color="accent">
+        {{ isEdit ? "Save" : "Create" }}
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</form>
