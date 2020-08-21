@@ -1,0 +1,33 @@
+<form [formGroup]="createUserForm">
+  <mat-card class="user-form-wrapper">
+    <mat-card-header>
+      <mat-card-title>Create new user</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="create-user-form">
+        <mat-form-field>
+          <mat-label>User name</mat-label>
+          <input formControlName="name" type="text" matInput />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input formControlName="email" type="email" matInput />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Title</mat-label>
+          <input formControlName="title" type="text" matInput />
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+      <button routerLink="/users" mat-button>Cancel</button>
+      <button mat-raised-button color="accent" (click)="createUser()">
+        Create
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</form>

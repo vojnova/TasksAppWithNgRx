@@ -1,7 +1,11 @@
 <div class="tasks">
-  <app-task
-    routerLink="/tasks/edit/{{ task.id }}"
-    [task]="task"
-    *ngFor="let task of tasks"
-  ></app-task>
+  <div class="actions">
+    <button mat-raised-button color="accent" (click)="openCreateTaskDialog()">
+      New task
+    </button>
+  </div>
+
+  <mat-list style="min-width: 500px;">
+    <app-task (delete)="onTaskDelete(task)" (edit)="onTaskEdit(task)" [task]="task" *ngFor="let task of tasks"></app-task>
+  </mat-list>
 </div>

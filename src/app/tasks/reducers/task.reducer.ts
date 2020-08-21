@@ -3,6 +3,7 @@ import { Task } from '../models/task';
 import { createReducer, on, Action, createSelector } from '@ngrx/store';
 
 import * as TaskActions from '../actions/tasks.actions';
+import { v4 as uuid } from 'uuid';
 
 export interface State extends EntityState<Task> {
   selectedTaskId: number | string;
@@ -15,10 +16,13 @@ const initialState: State = adapter.getInitialState({ selectedTaskId: null });
 const tasksReducer = createReducer(
   initialState,
   on(TaskActions.CreateTask, (state, { task }) =>
-    adapter.addOne({ ...task, id: Math.random() }, state)
+    adapter.addOne({ ...task, id: uuid() }, state)
   ),
   on(TaskActions.EditTask, (state, { updates }) =>
     adapter.updateOne(updates, state)
+  ),
+  on(TaskActions.RemoveTask, (state, { taskId }) =>
+    adapter.removeOne(taskId, state)
   )
 );
 
@@ -27,7 +31,6 @@ export const reducer = (state: State, acion: Action) => {
 };
 
 export const { selectEntities } = adapter.getSelectors();
-
 
 // equal to the select all function from adapter.getSelectors()
 export const selectAll = (state: EntityState<Task>) =>

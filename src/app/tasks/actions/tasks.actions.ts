@@ -11,3 +11,8 @@ export const EditTask = createAction(
   '[Tasks] Edit Task',
   props<{ updates: Update<Task> }>()
 );
+
+export const RemoveTask = createAction(
+  '[Tasks] Remove Task',
+  props<{ taskId: string }>()
+);

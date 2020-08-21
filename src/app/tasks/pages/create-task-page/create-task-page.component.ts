@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, OnInit, Optional, Inject } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TaskSatus } from '../../models/task-status';
 import { Store } from '@ngrx/store';
 import { RootState, selectTaskById } from '../../../root.state';
 import * as TaskActions from '../../actions/tasks.actions';
 import { ActivatedRoute } from '@angular/router';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Task } from '../../models/task';
 
 @Component({
   selector: 'app-create-task-page',
@@ -21,11 +23,13 @@ export class CreateTaskPageComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private store: Store<RootState>,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    @Optional() private dialogRef: MatDialogRef<CreateTaskPageComponent>,
+    @Optional() @Inject(MAT_DIALOG_DATA) private dialogData: Task
   ) {
     this.createTaskForm = this.fb.group({
-      name: '',
-      description: '',
+      name: ['', Validators.required],
+      description: ['', Validators.required],
       status: TaskSatus.PENDING,
       userId: null,
     });
@@ -42,18 +46,29 @@ export class CreateTaskPageComponent implements OnInit {
   }
 
   submit() {
-    if (this.isEdit) {
-      this.store.dispatch(
-        TaskActions.EditTask({
-          updates: { id: this.taskId, changes: this.createTaskForm.value },
-        })
-      );
-    } else {
-      this.store.dispatch(
-        TaskActions.CreateTask({ task: this.createTaskForm.value })
-      );
+    if (this.createTaskForm.valid) {
+      if (this.isEdit) {
+        this.store.dispatch(
+          TaskActions.EditTask({
+            updates: { id: this.taskId, changes: this.createTaskForm.value },
+          })
+        );
+      } else {
+        this.store.dispatch(
+          TaskActions.CreateTask({ task: this.createTaskForm.value })
+        );
+      }
+      if (this.dialogRef) {
+        this.dialogRef.close();
+      }
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.dialogData) {
+      this.isEdit = true;
+      this.taskId = this.dialogData.id;
+      this.createTaskForm.patchValue(this.dialogData);
+    }
+  }
 }

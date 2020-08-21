@@ -1,0 +1,24 @@
+<div class="users">
+  <button routerLink="/users/create" color="accent" mat-raised-button>
+    Create User
+  </button>
+
+  <mat-list style="width: 100%;">
+    <app-user
+      (edit)="onUserEdit(user)"
+      (remove)="onUserRemove(user)"
+      [user]="user"
+      *ngFor="let user of users$ | async"
+    ></app-user>
+  </mat-list>
+</div>
+
+<ng-template #confirmDialog>
+  <mat-dialog-content>
+    <p>Are you sure you want to delete?</p>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-dialog-close mat-button>No</button>
+    <button [mat-dialog-close]="true" mat-raised-button color="warn">Yes</button>
+  </mat-dialog-actions>
+</ng-template>

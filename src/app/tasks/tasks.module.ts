@@ -23,5 +23,8 @@ import { RouterModule } from '@angular/router';
     RouterModule,
     StoreModule.forFeature('tasks', fromTasks.reducer),
   ],
+  entryComponents: [
+    CreateTaskPageComponent
+  ]
 })
 export class TasksModule {}
