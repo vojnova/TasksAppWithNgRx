@@ -1,4 +1,4 @@
-<form [formGroup]="createUserForm">
+<form [formGroup]="createUserForm" (ngSubmit)="createUser()">
   <mat-card class="user-form-wrapper">
     <mat-card-header>
       <mat-card-title>Create new user</mat-card-title>
@@ -24,8 +24,8 @@
     </mat-card-content>
 
     <mat-card-actions align="end">
-      <button routerLink="/users" mat-button>Cancel</button>
-      <button mat-raised-button color="accent" (click)="createUser()">
+      <button type="button" routerLink="/users" mat-button>Cancel</button>
+      <button type="submit" mat-raised-button color="accent">
         Create
       </button>
     </mat-card-actions>

@@ -1,9 +1,11 @@
 import { TaskSatus } from './task-status';
+import { User } from 'src/app/users/models/user';
 
 export interface Task {
   id: string;
   name: string;
   description: string;
   status: TaskSatus;
-  userId: string;
+  users?: User[];
+  userIds: string[];
 }

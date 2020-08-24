@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { UserComponent } from './components/user/user.component';
 import { RouterModule } from '@angular/router';
+import { TasksModule } from '../tasks/tasks.module';
 
 @NgModule({
   declarations: [CreateUserComponent, UserListComponent, UserComponent],
@@ -16,6 +17,7 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     RouterModule,
     MaterialModule,
+    TasksModule,
     ReactiveFormsModule,
     StoreModule.forFeature('users', fromUsers.reducer)
   ]

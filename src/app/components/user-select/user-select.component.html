@@ -1,0 +1,20 @@
+<mat-form-field style="width: 100%" class="example-chip-list">
+  <mat-chip-list #chipList aria-label="Fruit selection">
+    <mat-chip
+      *ngFor="let user of users"
+      [selectable]="true"
+      [removable]="true"
+      (removed)="remove(user)"
+    >
+      {{ user.name }}
+      <mat-icon matChipRemove>cancel</mat-icon>
+    </mat-chip>
+    <input placeholder="Search user" #userInput [formControl]="userControl"
+    [matAutocomplete]="auto" [matChipInputFor]="chipList"/>
+  </mat-chip-list>
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+    <mat-option *ngFor="let user of filteredUsers | async" [value]="user">
+      {{ user.name }}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

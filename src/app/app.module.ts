@@ -12,6 +12,7 @@ import { UsersModule } from './users/users.module';
 import { MaterialModule } from './material/material.module';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent, NavigationComponent],
@@ -23,6 +24,7 @@ import { environment } from '../environments/environment';
     TasksModule,
     UsersModule,
     MaterialModule,
+    ReactiveFormsModule,
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
   ],
   providers: [],

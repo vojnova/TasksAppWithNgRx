@@ -15,9 +15,14 @@ const initialState: State = adapter.getInitialState({ selectedTaskId: null });
 
 const tasksReducer = createReducer(
   initialState,
-  on(TaskActions.CreateTask, (state, { task }) =>
-    adapter.addOne({ ...task, id: uuid() }, state)
-  ),
+  on(TaskActions.CreateTask, (state, { task }) => {
+    const { users, ...rest } = task;
+
+    return adapter.addOne(
+      { ...rest, userIds: users.map((user) => user.id) },
+      state
+    );
+  }),
   on(TaskActions.EditTask, (state, { updates }) =>
     adapter.updateOne(updates, state)
   ),

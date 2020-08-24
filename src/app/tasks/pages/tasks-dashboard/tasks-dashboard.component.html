@@ -1,11 +1,5 @@
 <div class="tasks">
-  <div class="actions">
-    <button mat-raised-button color="accent" (click)="openCreateTaskDialog()">
-      New task
-    </button>
-  </div>
 
-  <mat-list style="min-width: 500px;">
-    <app-task (delete)="onTaskDelete(task)" (edit)="onTaskEdit(task)" [task]="task" *ngFor="let task of tasks"></app-task>
-  </mat-list>
+
+  <app-task-list [tasks]="tasks"></app-task-list>
 </div>

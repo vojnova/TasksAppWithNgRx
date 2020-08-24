@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RootState, selectAllTasks } from 'src/app/root.state';
+import { RootState, selectAllTasks, selectTasksWithUsers } from 'src/app/root.state';
 import { Store } from '@ngrx/store';
 import { selectAll, State } from '../../reducers/task.reducer';
 import { Task } from '../../models/task';
@@ -18,26 +18,14 @@ export class TasksDashboardComponent implements OnInit {
 
   constructor(private store: Store<RootState>, private dialog: MatDialog) {
     this.store
-      .select(selectAllTasks)
-      .subscribe((tasks) => (this.tasks = tasks));
+      .select(selectTasksWithUsers)
+      .subscribe((tasks) => {
+        (this.tasks = tasks);
+        console.log(this.tasks)
+      });
   }
 
-  openCreateTaskDialog() {
-    this.dialog.open(CreateTaskPageComponent, {
-      panelClass: 'no-dialog-background',
-    });
-  }
 
-  onTaskEdit(task: Task) {
-    this.dialog.open(CreateTaskPageComponent, {
-      panelClass: 'no-dialog-background',
-      data: task
-    });
-  }
-
-  onTaskDelete(task: Task) {
-    this.store.dispatch(TaskActions.RemoveTask({ taskId: task.id }));
-  }
 
   ngOnInit(): void {}
 }

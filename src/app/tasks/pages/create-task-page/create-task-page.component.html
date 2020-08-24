@@ -3,7 +3,7 @@
   (ngSubmit)="submit()"
   [formGroup]="createTaskForm"
 >
-  <mat-card  class="mat-elevation-z8">
+  <mat-card class="mat-elevation-z8">
     <mat-card-header>
       <mat-card-title>{{
         isEdit ? "Edit task" : "Create new task"
@@ -31,12 +31,22 @@
             }}</mat-option>
           </mat-select>
         </mat-form-field>
+
+        <app-user-select
+          formControlName="users"
+          [allUsers]="allUsers | async"
+        ></app-user-select>
       </div>
     </mat-card-content>
     <mat-divider></mat-divider>
     <mat-card-actions align="end">
       <button mat-dialog-close type="button" mat-button>Cancel</button>
-      <button [disabled]="createTaskForm.invalid" type="submit" mat-raised-button color="accent">
+      <button
+        [disabled]="createTaskForm.invalid"
+        type="submit"
+        mat-raised-button
+        color="accent"
+      >
         {{ isEdit ? "Save" : "Create" }}
       </button>
     </mat-card-actions>

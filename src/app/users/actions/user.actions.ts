@@ -16,3 +16,8 @@ export const EditUser = createAction(
   '[Users] Edit User',
   props<{ updates: Update<User> }>()
 );
+
+export const CreateMultipleUsers = createAction(
+  '[Users] Create multiple Users',
+  props<{ users: User[] }>()
+);

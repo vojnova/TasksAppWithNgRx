@@ -2,11 +2,15 @@ import { Component, OnInit, Optional, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TaskSatus } from '../../models/task-status';
 import { Store } from '@ngrx/store';
-import { RootState, selectTaskById } from '../../../root.state';
+import { RootState, selectTaskById, selectAllUsers } from '../../../root.state';
 import * as TaskActions from '../../actions/tasks.actions';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Task } from '../../models/task';
+import { Observable } from 'rxjs';
+import { User, createTestUser } from 'src/app/users/models/user';
+import { tap } from 'rxjs/operators';
+import {v4 as uuid} from  'uuid'
 
 @Component({
   selector: 'app-create-task-page',
@@ -18,6 +22,8 @@ export class CreateTaskPageComponent implements OnInit {
 
   public taskStatus = ['PENDING', 'IN_PROGRESS', 'DONE', 'DISCARDED'];
   public isEdit = false;
+  public allUsers: Observable<User[]>;
+
   private taskId;
 
   constructor(
@@ -31,8 +37,10 @@ export class CreateTaskPageComponent implements OnInit {
       name: ['', Validators.required],
       description: ['', Validators.required],
       status: TaskSatus.PENDING,
-      userId: null,
+      users: [[]]
     });
+
+    this.allUsers = this.store.select(selectAllUsers);
 
     this.route.paramMap.subscribe((params) => {
       if (params.get('id')) {
@@ -48,14 +56,16 @@ export class CreateTaskPageComponent implements OnInit {
   submit() {
     if (this.createTaskForm.valid) {
       if (this.isEdit) {
+        const {users, ...updatedTask}  = this.createTaskForm.value
+
         this.store.dispatch(
           TaskActions.EditTask({
-            updates: { id: this.taskId, changes: this.createTaskForm.value },
+            updates: { id: this.taskId, changes: updatedTask },
           })
         );
       } else {
         this.store.dispatch(
-          TaskActions.CreateTask({ task: this.createTaskForm.value })
+          TaskActions.CreateTask({ task: {... this.createTaskForm.value, id: uuid()} })
         );
       }
       if (this.dialogRef) {

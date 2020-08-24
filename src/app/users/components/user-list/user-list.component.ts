@@ -6,11 +6,12 @@ import {
   TemplateRef,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { RootState, selectAllUsers } from 'src/app/root.state';
+import { RootState, selectAllUsers, selectUsersWithTasks } from 'src/app/root.state';
 import { Observable } from 'rxjs';
 import { User } from '../../models/user';
 import { MatDialog } from '@angular/material/dialog';
 import * as UserActions from '../../actions/user.actions';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-list',
@@ -23,7 +24,9 @@ export class UserListComponent implements OnInit {
   @ViewChild('confirmDialog') public confirmDialogRef: TemplateRef<HTMLElement>;
 
   constructor(private store: Store<RootState>, private dialog: MatDialog) {
-    this.users$ = this.store.select(selectAllUsers);
+    this.users$ = this.store
+      .select(selectUsersWithTasks)
+      .pipe(tap((users) => console.log(users)));
   }
 
   ngOnInit(): void {}
@@ -32,9 +35,9 @@ export class UserListComponent implements OnInit {
 
   onUserRemove(user: User) {
     const dialogRef = this.dialog.open(this.confirmDialogRef);
-    dialogRef.afterClosed().subscribe(remove => {
+    dialogRef.afterClosed().subscribe((remove) => {
       if (remove) {
-        this.store.dispatch(UserActions.RemoveUser({userId: user.id}))
+        this.store.dispatch(UserActions.RemoveUser({ userId: user.id }));
       }
     });
   }
