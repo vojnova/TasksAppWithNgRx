@@ -16,7 +16,7 @@ export class TaskEffects {
       ofType(TaskActions.CreateTask),
       switchMap((action) => {
         return this.taskService.createTask(action.task).pipe(
-          map((res) => TaskActions.CreatTaskSuccess({ task: res })),
+          map((res) => TaskActions.CreateTaskSuccess({ task: res })),
           catchError((err) => of(TaskActions.createTaskError({ error: err })))
         );
       })
@@ -25,5 +25,29 @@ export class TaskEffects {
 
   //TODO: edit task effect
 
+  editTask$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(TaskActions.EditTask),
+      switchMap((action) => {
+        return this.taskService.editTask(action.updates).pipe(
+          map((res) => TaskActions.EditTaskSuccess({ updates: res })),
+          catchError((err) => of(TaskActions.EditTaskError({ error: err })))
+        );
+      })
+    )
+  );
+
   //TODO: delete task effect
+
+  removeTask$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(TaskActions.RemoveTask),
+      switchMap((action) => {
+        return this.taskService.removeTask(action.taskId).pipe(
+          map((res) => TaskActions.RemoveTaskSuccess({ taskId: res })),
+          catchError((err) => of(TaskActions.RemoveTaskError({ error: err })))
+        );
+      })
+    )
+  );
 }

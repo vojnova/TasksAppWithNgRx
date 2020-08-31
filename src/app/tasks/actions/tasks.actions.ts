@@ -7,7 +7,7 @@ export const CreateTask = createAction(
   props<{ task: Task }>()
 );
 
-export const CreatTaskSuccess = createAction(
+export const CreateTaskSuccess = createAction(
   '[Tasks] Create Task Succcess',
   props<{ task: Task }>()
 );
@@ -22,7 +22,27 @@ export const EditTask = createAction(
   props<{ updates: Update<Task> }>()
 );
 
+export const EditTaskSuccess = createAction(
+  '[Tasks] Edit Task Success',
+  props<{ updates }>()
+);
+
+export const EditTaskError = createAction(
+  '[Tasks] Edit Task Error',
+  props<{ error: any }>()
+);
+
 export const RemoveTask = createAction(
   '[Tasks] Remove Task',
   props<{ taskId: string }>()
+);
+
+export const RemoveTaskSuccess = createAction(
+  '[Tasks] Remove Task Success',
+  props<{ taskId }>()
+);
+
+export const RemoveTaskError = createAction(
+  '[Tasks] Remove Task Error',
+  props<{ error: any }>()
 );

@@ -18,5 +18,15 @@ export class TaskService {
 
   //TODO: Edit Task Method
 
+  public editTask(updates) {
+    console.log('editing task');
+    return of(updates).pipe(delay(1000));
+  }
+
   //TODO:  Delete TASK METHOD
+
+public removeTask(taskId) {
+    console.log('removing task');
+    return of(taskId).pipe(delay(1000));
+}
 }
