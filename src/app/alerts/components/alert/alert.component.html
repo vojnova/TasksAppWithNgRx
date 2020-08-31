@@ -1,0 +1,7 @@
+<div class=" alert {{ data.type }} mat-elevation-z8">
+  <div class="message">{{ data.message }}</div>
+  <div class="actions">
+    <button mat-button (click)="close()">{{ data.closeButtonText }}</button>
+    <button mat-button (click)="confirm()">{{ data.confirmButtonText }}</button>
+  </div>
+</div>

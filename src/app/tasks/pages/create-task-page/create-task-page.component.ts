@@ -9,8 +9,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Task } from '../../models/task';
 import { Observable } from 'rxjs';
 import { User, createTestUser } from 'src/app/users/models/user';
-import { tap } from 'rxjs/operators';
-import {v4 as uuid} from  'uuid'
+import { v4 as uuid } from 'uuid';
+import { AlertService } from '../../../alerts/alert.service';
 
 @Component({
   selector: 'app-create-task-page',
@@ -31,13 +31,14 @@ export class CreateTaskPageComponent implements OnInit {
     private store: Store<RootState>,
     private route: ActivatedRoute,
     @Optional() private dialogRef: MatDialogRef<CreateTaskPageComponent>,
-    @Optional() @Inject(MAT_DIALOG_DATA) private dialogData: Task
+    @Optional() @Inject(MAT_DIALOG_DATA) private dialogData: Task,
+    private alertService: AlertService
   ) {
     this.createTaskForm = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
       status: TaskSatus.PENDING,
-      users: [[]]
+      users: [[]],
     });
 
     this.allUsers = this.store.select(selectAllUsers);
@@ -56,7 +57,7 @@ export class CreateTaskPageComponent implements OnInit {
   submit() {
     if (this.createTaskForm.valid) {
       if (this.isEdit) {
-        const {users, ...updatedTask}  = this.createTaskForm.value
+        const { users, ...updatedTask } = this.createTaskForm.value;
 
         this.store.dispatch(
           TaskActions.EditTask({
@@ -65,7 +66,9 @@ export class CreateTaskPageComponent implements OnInit {
         );
       } else {
         this.store.dispatch(
-          TaskActions.CreateTask({ task: {... this.createTaskForm.value, id: uuid()} })
+          TaskActions.CreateTask({
+            task: { ...this.createTaskForm.value },
+          })
         );
       }
       if (this.dialogRef) {

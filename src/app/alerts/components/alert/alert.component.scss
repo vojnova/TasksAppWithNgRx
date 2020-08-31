@@ -1,0 +1,26 @@
+.success {
+  background: green;
+}
+
+.error {
+  background: tomato;
+}
+
+.info {
+  background: #673ab7;
+}
+
+.alert {
+  padding: 12px;
+  width: 100%;
+  color: white;
+  border-radius: 5px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .message {
+    padding-left: 12px;
+  }
+}

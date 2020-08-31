@@ -12,6 +12,10 @@ import { RouterModule } from '@angular/router';
 
 import { SharedModule } from '../components/shared/shared.module';
 import { TaskListComponent } from './components/task-list/task-list.component';
+import { AlertsModule } from '../alerts/alerts.module';
+
+import { EffectsModule } from '@ngrx/effects';
+import { TaskEffects } from './effects/task.effects';
 
 @NgModule({
   declarations: [
@@ -27,6 +31,8 @@ import { TaskListComponent } from './components/task-list/task-list.component';
     SharedModule,
     RouterModule,
     StoreModule.forFeature('tasks', fromTasks.reducer),
+    EffectsModule.forFeature([TaskEffects]),
+    AlertsModule,
   ],
   exports: [TaskComponent, TaskListComponent],
   entryComponents: [CreateTaskPageComponent],

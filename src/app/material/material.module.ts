@@ -14,10 +14,15 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatChipsModule } from '@angular/material/chips';
+import {
+  MatSnackBarModule,
+  MAT_SNACK_BAR_DEFAULT_OPTIONS,
+} from '@angular/material/snack-bar';
 
 const MODULES = [
   LayoutModule,
   MatAutocompleteModule,
+  MatSnackBarModule,
   MatChipsModule,
   MatDialogModule,
   MatSelectModule,
@@ -35,5 +40,11 @@ const MODULES = [
   declarations: [],
   imports: [CommonModule, ...MODULES],
   exports: [...MODULES],
+  providers: [
+    {
+      provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
+      useValue: { panelClass: 'alert-container' },
+    },
+  ],
 })
 export class MaterialModule {}

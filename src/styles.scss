@@ -1,9 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
-.container  {
+.container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,4 +21,17 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .no-dialog-background mat-dialog-container {
   background: transparent;
   box-shadow: none;
+}
+
+.alert-container {
+  padding: 8px !important;
+  display: flex !important;
+  justify-content: flex-start;
+  background: transparent !important;
+  align-items: center;
+  box-shadow: none;
+}
+
+.alert-container > app-alert {
+  flex: 1;
 }
