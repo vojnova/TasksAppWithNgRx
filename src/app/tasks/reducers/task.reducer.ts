@@ -23,9 +23,13 @@ const tasksReducer = createReducer(
       state
     );
   }),
+
+  //TODO: update
   on(TaskActions.EditTask, (state, { updates }) =>
     adapter.updateOne(updates, state)
   ),
+
+  //TODO: update
   on(TaskActions.RemoveTask, (state, { taskId }) =>
     adapter.removeOne(taskId, state)
   )

@@ -15,10 +15,15 @@ export class TaskEffects {
     this.action$.pipe(
       ofType(TaskActions.CreateTask),
       switchMap((action) => {
-        return this.taskService
-          .createTask(action.task)
-          .pipe(map((res) => TaskActions.CreatTaskSuccess({ task: res })));
+        return this.taskService.createTask(action.task).pipe(
+          map((res) => TaskActions.CreatTaskSuccess({ task: res })),
+          catchError((err) => of(TaskActions.createTaskError({ error: err })))
+        );
       })
     )
   );
+
+  //TODO: edit task effect
+
+  //TODO: delete task effect
 }

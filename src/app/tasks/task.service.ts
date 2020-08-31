@@ -11,8 +11,12 @@ export class TaskService {
   constructor() {}
 
   public createTask(task: Task) {
-    console.log('creating task')
+    console.log('creating task');
     const id = uuid();
     return of({ ...task, id }).pipe(delay(1000));
   }
+
+  //TODO: Edit Task Method
+
+  //TODO:  Delete TASK METHOD
 }
